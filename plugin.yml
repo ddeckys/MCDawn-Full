@@ -1,0 +1,109 @@
+name: DawnCraft
+main: com.mcdawn.dawncraft.Main
+version: 1.0
+commands:
+   pl:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   place:
+      description: Places a block at your feet
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   mark:
+      description: Used for marking
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   s:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   select:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   summon:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   help:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   tp:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   teleport:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   tphere:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   teleporthere:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   kick:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   broadcast:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   say:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   cuboid:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   z:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   box:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   devs:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   developers:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   k:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
+   test:
+      description: Used for testing
+      usage: /test <option>
+      permission:
+      permission-message: This is an error
