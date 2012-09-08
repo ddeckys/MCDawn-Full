@@ -3,6 +3,8 @@ DawnCraft
 
 DawnCraft - The ultimate all-in-one Bukkit plugin. Inspired by the original MCDawn Minecraft Classic Server Software.
 
+Visit our website (The MCDawn Community) at http://www.mcdawn.com, and the DawnCraft Portal at http://dawncraft.mcdawn.com.
+
 Unless otherwise noted, this software and its source code is Copyright 2012 DawnCraft Team, licensed under the Apache License, Version 2.0.
 
 In an effort to add copyright notices to the source code, we utilized automated methods to insert these. Some copyright attributions may be incorrect. If you identify any such cases, please notify us immediately so we may correct it.
