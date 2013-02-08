@@ -1,0 +1,22 @@
+name: MCDawn
+main: com.mcdawn.full.MCDawn
+version: 1.0.0
+authors: [jonnyli1125, Incedo]
+website: http://full.mcdawn.com
+
+commands:
+    test:
+        description: Nothing
+        aliases: [what, the, hell]
+        permission: mcdawn.test
+        usage: Lolnope. Use it correctly by typing /test
+
+permissions:
+    mcdawn.*:
+        description: Gives you access to ALL the MCDawn commands
+        children:
+            mcdawn.test: true
+    
+    mcdawn.test:
+        description: Test command
+        default: true
