@@ -1,14 +1,14 @@
 package com.mcdawn.full;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Map.Entry;
 
-import org.bukkit.Color;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Util {
-	private MCDawn mcdawn;
+	public Util() { }
 	
 	public static String randomNick() {
 		String returnValue = "MC";
@@ -19,8 +19,20 @@ public class Util {
 		return returnValue;
 	}
 	
+	public static String parseChat(String message) { return parseChatVariables(parseChatColors(message)); }
+	public static String parseChatColors(String message) { return message.replaceAll("&([0-9a-fk-or])+?", "§$1"); }
+	public static String parseChatVariables(String message) {
+		message = message.replace("$datetime", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+		message = message.replace("$date", new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
+		message = message.replace("$time", new SimpleDateFormat("HH:mm:ss").format(new Date()));
+		message = message.replace("$motd", Bukkit.getServer().getMotd());
+		message = message.replace("$server", Bukkit.getServerName());
+		message = message.replace("$ip", Bukkit.getIp());
+		return message;
+	}
+	
 	public void setupConfig() {
-		FileConfiguration config = mcdawn.getConfig();
+		FileConfiguration config = MCDawn.thisPlugin.getConfig();
 		config.options().copyDefaults(true);
 		final Map<String, Object> defaults = new HashMap<String, Object>();
 		// general
@@ -50,14 +62,14 @@ public class Util {
 		for (final Entry<String, Object> e : defaults.entrySet())
 			if (!config.contains(e.getKey()))
 				config.set(e.getKey(), e.getValue());
-		mcdawn.saveConfig();
+		MCDawn.thisPlugin.saveConfig();
 	}
 	
 	public void saveConfig(Map<String, Object> map) {
-		FileConfiguration config = mcdawn.getConfig();
+		FileConfiguration config = MCDawn.thisPlugin.getConfig();
 		for (final Entry<String, Object> e : map.entrySet())
 			if (!config.contains(e.getKey()))
 				config.set(e.getKey(), e.getValue());
-		mcdawn.saveConfig();
+		MCDawn.thisPlugin.saveConfig();
 	}
 }
