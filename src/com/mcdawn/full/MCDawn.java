@@ -17,12 +17,10 @@ public class MCDawn extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable() {
 		thisPlugin = this;
-		try {
-			logger = getLogger();
-			logger.info("Enabled MCDawn, v" + getVersion() + (getExtraVersion() == "" ? "" : "-" + getExtraVersion() + "."));
-			getServer().getPluginManager().registerEvents(new EventListener(), this);
-			
-		} catch (Exception ex) { ex.printStackTrace(); }
+		logger = getLogger();
+		logger.info("Enabled MCDawn, v" + getVersion() + (getExtraVersion() == "" ? "" : "-" + getExtraVersion() + "."));
+		getServer().getPluginManager().registerEvents(new EventListener(), this);
+		Util.setupConfig();
 	}
 	
 	@Override
