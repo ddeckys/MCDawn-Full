@@ -3,8 +3,10 @@ package com.mcdawn.full;
 import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.command.*;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.*;
+
+import com.mcdawn.full.irc.*;
 
 public class MCDawn extends JavaPlugin implements Listener {
 	public static MCDawn thisPlugin;
@@ -14,6 +16,9 @@ public class MCDawn extends JavaPlugin implements Listener {
 	
 	public static Logger logger;
 	
+	public static IRC irc;
+	public static GlobalChat globalChat;
+	
 	@Override
 	public void onEnable() {
 		thisPlugin = this;
@@ -21,19 +26,16 @@ public class MCDawn extends JavaPlugin implements Listener {
 		logger.info("Enabled MCDawn, v" + getVersion() + (getExtraVersion() == "" ? "" : "-" + getExtraVersion() + "."));
 		getServer().getPluginManager().registerEvents(new EventListener(), this);
 		Util.setupConfig();
+		Util.initializeCommands();
+		FileConfiguration config = getConfig();
+		if (config.getBoolean("irc.useIRC")) irc = new IRC();
+		if (config.getBoolean("globalchat.useGlobalChat")) globalChat = new GlobalChat();
 	}
 	
 	@Override
 	public void onDisable() {
+		if (irc != null && irc.isConnected()) irc.shutdown();
+		if (globalChat != null && globalChat.isConnected()) globalChat.shutdown();
 		logger.info("Disabled MCDawn.");
-	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("test")) {
-			sender.sendMessage("ALLO");
-			return true;
-		}
-		return false;
 	}
 }

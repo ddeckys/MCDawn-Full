@@ -2,9 +2,13 @@ package com.mcdawn.full.commands;
 
 import org.bukkit.command.*;
 
-public class Moderation extends Category implements CommandExecutor {
+public class BuildingCommands extends Category implements CommandExecutor {
+	public BuildingCommands() { }
 	@Override
-	public String getName() { return "moderation"; }
+	public String getName() { return "building"; }
+	
+	@Override
+	public String getHelpCategory() { return "build"; }
 
 	@Override
 	public String[] getAllCommands() { return new String[] { }; }
@@ -14,5 +18,4 @@ public class Moderation extends Category implements CommandExecutor {
 		
 		return false;
 	}
-
 }

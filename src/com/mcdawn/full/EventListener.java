@@ -14,7 +14,11 @@ public class EventListener implements Listener {
 	
 	@EventHandler
 	public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
-		event.setMessage(Util.parseChat(event.getMessage()));
+		Player p = event.getPlayer();
+		String message = Util.parseChat(event.getMessage());
+		event.setFormat(p.getDisplayName() + ": " + ChatColor.RESET + message);
+		if (MCDawn.thisPlugin.getConfig().getBoolean("irc.useIRC"))
+			MCDawn.irc.say(p.getDisplayName() + ": " + message);
 	}
 	
 	@EventHandler

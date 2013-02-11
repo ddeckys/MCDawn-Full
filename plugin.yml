@@ -10,11 +10,16 @@ commands:
         aliases: [helpop, commands, commandlist, cmdlist]
         permission: mcdawn.*;
         usage: /help <category/command>
-    test:
-        description: Nothing
-        aliases: [what, the, hell]
-        permission: mcdawn.test
-        usage: Lolnope. Use it correctly by typing /test
+    global:
+        description: Send a message to all MCDawn servers that are connected to Global Chat.
+        aliases: [gl, gc]
+        permission: mcdawn.*
+        usage: /global <message>
+    say:
+        description: Broadcast a message to the whole server.
+        aliases: [broadcast]
+        permission: mcdawn.*
+        usage: /say <message>
 
 permissions:
     mcdawn.*:

@@ -8,22 +8,26 @@ import java.util.Map.Entry;
 
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import com.maxmind.geoip.*;
 import com.mcdawn.full.commands.*;
 
 public class Util {
-	public String[] getAllCommands() {
-		ArrayList<String> commands = new ArrayList<String>();
-		for (String s : new Building().getAllCommands()) commands.add(s);
-		return (String[]) commands.toArray();
+	public static void initializeCommands() {
+		BuildingCommands b = new BuildingCommands();
+		for (String s : b.getAllCommands()) MCDawn.thisPlugin.getCommand(s).setExecutor(b);
+		InformationCommands i = new InformationCommands();
+		for (String s : i.getAllCommands()) MCDawn.thisPlugin.getCommand(s).setExecutor(i);
+		ModerationCommands m = new ModerationCommands();
+		for (String s : m.getAllCommands()) MCDawn.thisPlugin.getCommand(s).setExecutor(m);
+		OtherCommands o = new OtherCommands();
+		for (String s : o.getAllCommands()) MCDawn.thisPlugin.getCommand(s).setExecutor(o);
 	}
 	
-	public void initializeCommands() {
-	}
+	public static String capitalizeFirstChar(String s) { return s.substring(0, 1).toUpperCase() + s.substring(1); }
 	
-	public static String parseChat(String message) { return parseChatVariables(parseChatColors(message)); }
-	public static String parseChatColors(String message) { return message.replaceAll("&([0-9a-fk-or])+?", "§$1"); }
+	public static String parseChat(String message) { return parseChatVariables(ChatColor.translateAlternateColorCodes('&', message)); }
 	public static String parseChatVariables(String message) {
 		message = message.replace("$datetime", new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 		message = message.replace("$date", new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
@@ -31,6 +35,52 @@ public class Util {
 		message = message.replace("$motd", Bukkit.getServer().getMotd());
 		message = message.replace("$server", Bukkit.getServerName());
 		message = message.replace("$ip", Bukkit.getIp());
+		return message;
+	}
+	
+	public static final char IRC_COLOR_CODE = '\u0003';
+	public static final char IRC_BOLD_CODE = '\u0002';
+	public static final char IRC_STRIKETHROUGH_CODE = '\u0013';
+	public static final char IRC_UNDERLINE_CODE = '\u0015';
+	public static final char IRC_ITALIC_CODE = '\u0009';
+	public static final char IRC_RESET_CODE = '\u000f';
+	
+	@SuppressWarnings("serial")
+	public static HashMap<String, String> getMinecraftIRCColorMap() {
+		return new HashMap<String, String>() {{
+			put(ChatColor.COLOR_CHAR + "0", IRC_COLOR_CODE + "1");
+			put(ChatColor.COLOR_CHAR + "1", IRC_COLOR_CODE + "2");
+			put(ChatColor.COLOR_CHAR + "2", IRC_COLOR_CODE + "3");
+			put(ChatColor.COLOR_CHAR + "3", IRC_COLOR_CODE + "10");
+			put(ChatColor.COLOR_CHAR + "4", IRC_COLOR_CODE + "5");
+			put(ChatColor.COLOR_CHAR + "5", IRC_COLOR_CODE + "6");
+			put(ChatColor.COLOR_CHAR + "6", IRC_COLOR_CODE + "7");
+			put(ChatColor.COLOR_CHAR + "7", IRC_COLOR_CODE + "15");
+			put(ChatColor.COLOR_CHAR + "8", IRC_COLOR_CODE + "14");
+			put(ChatColor.COLOR_CHAR + "9", IRC_COLOR_CODE + "12");
+			put(ChatColor.COLOR_CHAR + "a", IRC_COLOR_CODE + "9");
+			put(ChatColor.COLOR_CHAR + "b", IRC_COLOR_CODE + "11");
+			put(ChatColor.COLOR_CHAR + "c", IRC_COLOR_CODE + "4");
+			put(ChatColor.COLOR_CHAR + "d", IRC_COLOR_CODE + "13");
+			put(ChatColor.COLOR_CHAR + "e", IRC_COLOR_CODE + "8");
+			put(ChatColor.COLOR_CHAR + "f", IRC_COLOR_CODE + "0");
+			put(ChatColor.COLOR_CHAR + "l", String.valueOf(IRC_BOLD_CODE));
+			put(ChatColor.COLOR_CHAR + "m", String.valueOf(IRC_STRIKETHROUGH_CODE));
+			put(ChatColor.COLOR_CHAR + "n", String.valueOf(IRC_UNDERLINE_CODE));
+			put(ChatColor.COLOR_CHAR + "o", String.valueOf(IRC_ITALIC_CODE));
+			put(ChatColor.COLOR_CHAR + "r", String.valueOf(IRC_RESET_CODE));
+		}};
+	}
+	
+	public static String minecraftToIRC(String message) {
+		final HashMap<String, String> colors = getMinecraftIRCColorMap();
+		for (Entry<String, String> e : colors.entrySet()) message = message.replace(e.getKey(), e.getValue());
+		return message;
+	}
+	
+	public static String ircToMinecraft(String message) {
+		final HashMap<String, String> colors = getMinecraftIRCColorMap();
+		for (Entry<String, String> e : colors.entrySet()) message = message.replace(e.getValue(), e.getKey());
 		return message;
 	}
 	
@@ -81,8 +131,7 @@ public class Util {
 				downloadFile("http://updates.mcdawn.com/dll/GeoIP.dat", "plugins/MCDawn/GeoIP.dat");
 			LookupService ls = new LookupService("plugins/MCDawn/GeoIP.dat");
 			return isLocalhostIP(ipAddress) ? "Localhost (" + ls.getCountry(getPublicIP()).getName() + ")" : ls.getCountry(ipAddress).getName();
-		}
-		catch (Exception ex) { ex.printStackTrace(); return "N/A"; }
+		} catch (Exception ex) { ex.printStackTrace(); return "N/A"; }
 	}
 	
 	public static void setupConfig() {
@@ -94,7 +143,7 @@ public class Util {
 		defaults.put("general.autoAfkKick", 20);
 		defaults.put("general.rankChat", true);
 		defaults.put("general.forceCuboid", true);
-		defaults.put("general.consoleName", "Anonymous");
+		defaults.put("general.consoleName", "Owner");
 		defaults.put("general.debugMode", false);
 		
 		// irc
@@ -105,11 +154,13 @@ public class Util {
 		defaults.put("irc.channel", "#ChangeMe");
 		defaults.put("irc.nick", Util.randomNick());
 		defaults.put("irc.identify", "");
+		defaults.put("irc.color", ChatColor.BLUE.getChar());
 		
-		// global
-		defaults.put("global.useGlobalChat", true);
-		defaults.put("global.nick", Util.randomNick());
-		defaults.put("global.identify", "");
+		// globalchat
+		defaults.put("globalchat.useGlobalChat", true);
+		defaults.put("globalchat.nick", Util.randomNick());
+		defaults.put("globalchat.identify", "");
+		defaults.put("globalchat.color", ChatColor.DARK_AQUA.getChar());
 		
 		saveConfig(defaults);
 	}
@@ -125,4 +176,15 @@ public class Util {
 	public static int randomInt(int min, int max) { return min + (int)(Math.random() * ((max - min) + 1)); }
 	
 	public static String randomNick() { return "MC" + randomInt(1000, 9999); }
+	
+	public static void broadcastDevs(String message) {
+		for (Player p : Bukkit.getServer().getOnlinePlayers())
+			if (PlayerInfo.isDev(p.getName()))
+				p.sendMessage(message);
+	}
+	
+	public static void broadcastConsoleAndDevs(String message) {
+		System.out.println(message);
+		broadcastDevs(message);
+	}
 }
