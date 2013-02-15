@@ -73,14 +73,14 @@ public class Util {
 	}
 	
 	public static String minecraftToIRC(String message) {
-		final HashMap<String, String> colors = getMinecraftIRCColorMap();
-		for (Entry<String, String> e : colors.entrySet()) message = message.replace(e.getKey(), e.getValue());
+		for (Entry<String, String> e : getMinecraftIRCColorMap().entrySet())
+			message = message.replace(e.getKey(), e.getValue());
 		return message;
 	}
 	
 	public static String ircToMinecraft(String message) {
-		final HashMap<String, String> colors = getMinecraftIRCColorMap();
-		for (Entry<String, String> e : colors.entrySet()) message = message.replace(e.getValue(), e.getKey());
+		for (Entry<String, String> e : getMinecraftIRCColorMap().entrySet())
+			message = message.replace(e.getValue(), e.getKey());
 		return message;
 	}
 	

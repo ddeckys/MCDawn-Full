@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 public class EventListener implements Listener {
 	@EventHandler
 	public void onWorldInitEvent(WorldInitEvent event) {
-		
 	}
 	
 	@EventHandler

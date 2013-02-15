@@ -35,6 +35,9 @@ public class OtherCommands extends Category implements CommandExecutor {
 				Bukkit.getServer().broadcastMessage(name + ": " + ChatColor.RESET + message);
 				MCDawn.irc.say(name + ": " + ChatColor.RESET + message);
 				return true;
+			case "":
+				
+				return true;
 			default: return false;
 		}
 	}
