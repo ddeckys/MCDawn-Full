@@ -11,7 +11,26 @@ public class PlayerInfo {
 	
 	public Player thisPlayer;
 	
-	public PlayerInfo(Player p) { thisPlayer = p; }
+	private int permissionLevel;
+	
+	public int getPerm(){return permissionLevel;}
+	
+	public void setPerm(int perm){ //Do whatever you do to modify the table :P 
+	}
+	
+	private ChatColor nameColor;
+	
+	public ChatColor getNameColor(){return nameColor; }
+	
+	public void setNameColor(Color c){
+		//modify table, you might have to convert the enum to a string
+		// here is the referenec for ChatColor:
+		// http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html
+	}
+	
+	public PlayerInfo(Player p) { thisPlayer = p;
+		//make sure you set the vales of permlevel an namecolor
+	}
 	
 	public void save() {
 		
