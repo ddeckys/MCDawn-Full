@@ -187,4 +187,16 @@ public class Util {
 		System.out.println(message);
 		broadcastDevs(message);
 	}
+	
+	public static Player getPlayerFromString(String playername){
+	    	for (Player p : Bukkit.getServer().getOnlinePlayers()){
+	    		if (p.getName().toLowerCase() == playername.toLowerCase()) {
+	    			return p;	
+	    		}
+	    		if (p.getName().toLowerCase().contains(playername.toLowerCase())) {
+	    			return p;
+	    		}
+	    	}
+	    	return null;
+    	}
 }

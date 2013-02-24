@@ -20,6 +20,11 @@ commands:
         aliases: [broadcast]
         permission: mcdawn.*
         usage: /say <message>
+    kick:
+        description: Kick a player from the server
+        aliases: 
+        permission:
+        usage: /kick <player>
 
 permissions:
     mcdawn.*:
