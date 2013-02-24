@@ -32,35 +32,35 @@ public class GlobalChat extends PircBot implements Runnable {
 	}
 	
 	public void onConnect() {
-		Util.broadcastConsoleAndDevs(">[Global] " + getColor() + "Connected to MCDawn Global Chat.");
+		Bukkit.getServer().broadcastMessage(getColor() + ">[Global] " + "Connected to MCDawn Global Chat.");
 	}
 	
 	public void onDisconnect() {
-		Util.broadcastConsoleAndDevs(">[Global] " + getColor() + "Disconnected from MCDawn Global Chat.");
+		Bukkit.getServer().broadcastMessage(getColor() + ">[Global] " + "Disconnected from MCDawn Global Chat.");
 	}
 	
 	public void onJoin (String channel, String sender, String login, String hostname) {
-		Util.broadcastDevs(">[Global] " + getColor() + sender + "has joined " + channel);
+		Util.broadcastDevs(getColor() + ">[Global] " + sender + "has joined " + channel);
 	}
 	
 	public void onPart (String channel, String sender, String login, String hostname) {
-		Util.broadcastDevs(">[Global] " + getColor() + sender + "has left " + channel);
+		Util.broadcastDevs(getColor() + ">[Global] " + sender + "has left " + channel);
 	}
 	
 	public void onKick (String channel, String kickerNick, String kickerLogin, String kickerHostname, String recipientNick, String reason) {
-		Util.broadcastDevs(">[Global] " + getColor() + recipientNick + "was kicked by " + kickerNick + " from " + channel + " (" + reason + ")");
+		Util.broadcastDevs(getColor() + ">[Global] " + recipientNick + "was kicked by " + kickerNick + " from " + channel + " (" + reason + ")");
 	}
 	
 	public void onQuit (String sourceNick, String sourceLogin, String sourceHostname, String reason) {
-		Util.broadcastDevs(">[Global] " + getColor() + sourceNick + "has quit (" + reason + ")");
+		Util.broadcastDevs(getColor() + ">[Global] " + sourceNick + "has quit (" + reason + ")");
 	}
 	
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
-		Bukkit.getServer().broadcastMessage(">[Global] " + getColor() + sender + ": " + ChatColor.RESET + Util.ircToMinecraft(message));
+		Bukkit.getServer().broadcastMessage(getColor() + ">[Global] " + sender + ": " + ChatColor.RESET + Util.ircToMinecraft(message));
 	}
 	
 	public void onAction(String sender, String login, String hostname, String target, String action) {
-		Bukkit.getServer().broadcastMessage(">[Global] " + getColor() + "*" + sender + " " + Util.ircToMinecraft(action));
+		Bukkit.getServer().broadcastMessage(getColor() + ">[Global] " + "*" + sender + " " + Util.ircToMinecraft(action));
 	}
 	
 	public void say(String message) { say(message, true); }

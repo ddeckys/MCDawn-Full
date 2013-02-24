@@ -173,6 +173,15 @@ public class Util {
 		MCDawn.thisPlugin.saveConfig();
 	}
 	
+	public static void fileWriteAllLines(String path, List<String> lines) throws IOException {
+		File f = new File(path);
+		if (!f.exists()) f.createNewFile();
+		FileOutputStream out = new FileOutputStream(path);
+		out.write(org.apache.commons.lang.StringUtils.join(lines, System.getProperty("line.separator")).getBytes());
+		out.flush();
+		out.close();
+	}
+	
 	public static int randomInt(int min, int max) { return min + (int)(Math.random() * ((max - min) + 1)); }
 	
 	public static String randomNick() { return "MC" + randomInt(1000, 9999); }
@@ -184,19 +193,14 @@ public class Util {
 	}
 	
 	public static void broadcastConsoleAndDevs(String message) {
-		System.out.println(message);
+		MCDawn.logger.info(message);
 		broadcastDevs(message);
 	}
 	
-	public static Player getPlayerFromString(String playername){
-	    	for (Player p : Bukkit.getServer().getOnlinePlayers()){
-	    		if (p.getName().toLowerCase() == playername.toLowerCase()) {
-	    			return p;	
-	    		}
-	    		if (p.getName().toLowerCase().contains(playername.toLowerCase())) {
-	    			return p;
-	    		}
-	    	}
-	    	return null;
-    	}
+	public static Player getPlayerFromString(String playername) {
+	    for (Player p : Bukkit.getServer().getOnlinePlayers())
+	    	if (p.getName().equalsIgnoreCase(playername) || p.getName().toLowerCase().contains(playername.toLowerCase()))
+	    		return p;
+	    return null;
+    }
 }
