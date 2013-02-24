@@ -20,3 +20,4 @@ public class Table {
 	public ArrayList<String> getRow() {
 		return null;
 	}
+}
