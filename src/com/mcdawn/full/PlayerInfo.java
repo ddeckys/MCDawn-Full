@@ -2,6 +2,7 @@ package com.mcdawn.full;
 
 import java.util.*;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class PlayerInfo {
@@ -22,7 +23,7 @@ public class PlayerInfo {
 	
 	public ChatColor getNameColor(){return nameColor; }
 	
-	public void setNameColor(Color c){
+	public void setNameColor(ChatColor c){
 		//modify table, you might have to convert the enum to a string
 		// here is the referenec for ChatColor:
 		// http://jd.bukkit.org/rb/apidocs/org/bukkit/ChatColor.html
