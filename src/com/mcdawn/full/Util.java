@@ -179,7 +179,7 @@ public class Util {
 	
 	public static void broadcastDevs(String message) {
 		for (Player p : Bukkit.getServer().getOnlinePlayers())
-			if ((new PlayerInfo(p)).isDev())
+			if (new PlayerInfo(p).isDev())
 				p.sendMessage(message);
 	}
 	
