@@ -119,7 +119,11 @@ public class Util {
         } catch (IOException ex) { ex.printStackTrace(); }
 	}
 	
-	public static String getPublicIP() {return Bukkit.getServer().getIp();}
+	public static String getPublicIP() {
+		String raw = downloadString("http://checkip.dyndns.org/");
+		raw = raw.substring(raw.indexOf(":") + 1).trim();
+		raw = raw.substring(0, raw.indexOf("<")).trim();
+		return raw;}
 	
 	public static String getCountry(String ipAddress) {
 		try {
