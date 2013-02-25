@@ -12,9 +12,10 @@ import org.bukkit.entity.Player;
 
 import com.maxmind.geoip.*;
 import com.mcdawn.full.commands.*;
+import com.mcdawn.full.database.*;
 
 public class Util {
-	public static void initializeCommands() {
+	public static void setupCommands() {
 		BuildingCommands b = new BuildingCommands();
 		for (String s : b.getAllCommands()) MCDawn.thisPlugin.getCommand(s).setExecutor(b);
 		InformationCommands i = new InformationCommands();
@@ -165,6 +166,47 @@ public class Util {
 		saveConfig(defaults);
 	}
 	
+	@SuppressWarnings("serial")
+	public static void setupDatabase() {
+		Database.initialize();
+		Table playersTable = new Table("Players");
+		Map<String, String> playersTableColumns = new HashMap<String, String>() {{
+			put("Username", "");
+			put("DisplayName", "");
+			put("IPAddress", "");
+			put("Country", "");
+			put("TimeSpent", "0");
+			put("Hidden", "False");
+			put("Invincible", "False");
+			put("Muted", "False");
+			put("MutedBy", "");
+			put("Frozen", "False");
+			put("FrozenBy", "");
+			put("Deafened", "False");
+			put("DeafenedBy", "");
+			put("Jailed", "False");
+			put("JailedBy", "");
+			put("Handcuffed", "False");
+			put("HandcuffedBy", "");
+			put("Warnings", "0");
+			put("WarnedBy", "");
+			put("WarningRevokedBy", "");
+			put("FirstLoggedIn", "");
+			put("LastLoggedIn", "");
+			put("Logins", "0");
+			put("ModifiedBlocks", "0");
+			put("DestroyedBlocks", "0"); // BuiltBlocks column unneeded
+			put("Kicked", "0");
+			put("Deaths", "0");
+			put("Money", "0");
+		}};
+		try {
+			for (Entry<String, String> entry : playersTableColumns.entrySet())
+				if (!playersTable.columnExists(entry.getKey()))
+					playersTable.addColumn(entry.getKey(), entry.getValue());
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+	
 	public static void saveConfig(Map<String, Object> map) {
 		FileConfiguration config = MCDawn.thisPlugin.getConfig();
 		for (final Entry<String, Object> e : map.entrySet())
@@ -173,13 +215,21 @@ public class Util {
 		MCDawn.thisPlugin.saveConfig();
 	}
 	
-	public static void fileWriteAllLines(String path, List<String> lines) throws IOException {
+	public static void fileWriteAllLines(String path, List<String> contents) throws IOException {
 		File f = new File(path);
 		if (!f.exists()) f.createNewFile();
 		FileOutputStream out = new FileOutputStream(path);
-		out.write(org.apache.commons.lang.StringUtils.join(lines, System.getProperty("line.separator")).getBytes());
+		out.write(org.apache.commons.lang.StringUtils.join(contents, System.getProperty("line.separator")).getBytes());
 		out.flush();
 		out.close();
+	}
+	
+	public static <T> List<T> removeDuplicates(List<T> collection) {
+		List<T> list = new ArrayList<T>();
+		for (T item : collection)
+			if (!list.contains(item))
+				list.add(item);
+		return list;
 	}
 	
 	public static int randomInt(int min, int max) { return min + (int)(Math.random() * ((max - min) + 1)); }

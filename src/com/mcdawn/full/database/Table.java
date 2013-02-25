@@ -23,11 +23,11 @@ public class Table {
 		}
 	}
 	public List<String> getLines() {
-		try { return Files.readAllLines(Paths.get(getFile().getPath()), Charset.defaultCharset()); }
+		try { return Util.removeDuplicates(Files.readAllLines(Paths.get(getFile().getPath()), Charset.defaultCharset())); }
 		catch (IOException e) { e.printStackTrace(); return new ArrayList<String>(); }
 	}
 	public void setLines(List<String> lines) {
-		try { Util.fileWriteAllLines(getFile().getPath(), lines); }
+		try { Util.fileWriteAllLines(getFile().getPath(), Util.removeDuplicates(lines)); }
 		catch (IOException e) { e.printStackTrace(); }
 	}
 	public List<List<String>> getRows() {
