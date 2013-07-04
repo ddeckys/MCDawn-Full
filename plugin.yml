@@ -26,6 +26,11 @@ commands:
         aliases: 
         permission:
         usage: /kick <player>
+    players:
+        description: Gets the current online players
+        aliases: [p]
+        permission:
+        usage: /players
 
 permissions:
     mcdawn.*:

@@ -2,8 +2,10 @@ package com.mcdawn.full.commands;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 
 import com.mcdawn.full.MCDawn;
 
@@ -44,6 +46,11 @@ public class InformationCommands extends Category implements CommandExecutor {
 					default: return false;
 				}
 				return true;
+			case "players":
+				// TODO: Add ranks/Chat Colors/Prefixs once PlayerInfo is ready
+				sender.sendMessage("Current Online Players:");
+				for (Player p : Bukkit.getServer().getOnlinePlayers())
+					sender.sendMessage(p.getDisplayName());
 			default: return false;
 		}
 	}

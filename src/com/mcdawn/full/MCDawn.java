@@ -26,7 +26,8 @@ public class MCDawn extends JavaPlugin implements Listener {
 		logger.info("Enabled MCDawn, v" + getVersion() + (getExtraVersion() == "" ? "" : "-" + getExtraVersion() + "."));
 		getServer().getPluginManager().registerEvents(new EventListener(), this);
 		Util.setupConfig();
-		Util.initializeCommands();
+		Util.setupCommands();
+		Util.setupDatabase();
 		FileConfiguration config = getConfig();
 		if (config.getBoolean("irc.useIRC")) irc = new IRC();
 		if (config.getBoolean("globalchat.useGlobalChat")) globalChat = new GlobalChat();
