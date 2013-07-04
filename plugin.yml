@@ -1,0 +1,37 @@
+name: MCDawn
+main: com.mcdawn.full.MCDawn
+version: 1.0.0
+authors: [jonnyli1125, Incedo]
+website: http://full.mcdawn.com/
+
+commands:
+    help:
+        description: Displays the help menu.
+        aliases: [helpop, commands, commandlist, cmdlist]
+        permission: mcdawn.*;
+        usage: /help <category/command>
+    global:
+        description: Send a message to all MCDawn servers that are connected to Global Chat.
+        aliases: [gl, gc]
+        permission: mcdawn.*
+        usage: /global <message>
+    say:
+        description: Broadcast a message to the whole server.
+        aliases: [broadcast]
+        permission: mcdawn.*
+        usage: /say <message>
+    kick:
+        description: Kick a player from the server
+        aliases: 
+        permission:
+        usage: /kick <player>
+
+permissions:
+    mcdawn.*:
+        description: Gives you access to ALL the MCDawn commands
+        children:
+            mcdawn.test: true
+            
+    mcdawn.test:
+        description: Test command
+        default: true
